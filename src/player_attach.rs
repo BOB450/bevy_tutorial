@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{player::PlayerMovement};
+use crate::player::PlayerMovement;
 
 #[derive(Component)]
 pub struct PlayerAttach {
