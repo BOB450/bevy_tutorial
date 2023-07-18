@@ -2,7 +2,6 @@ use bevy::{prelude::*, window::PrimaryWindow};
 
 use crate::{
     animation::Animator, bullet::Bullet, cursor_info::OffsetedCursorPosition,
-    player::PlayerMovement,
 };
 
 const BULLET_LIFETIME: f32 = 10.0;
@@ -53,24 +52,22 @@ pub fn gun_controls(
         let angle = diff.y.atan2(diff.x);
         transform.rotation = Quat::from_axis_angle(Vec3::new(0., 0., 1.), angle);
 
-        if gun_controller.shoot_timer <= 0. {
-            if buttons.pressed(MouseButton::Left) {
-                let mut spawn_transform = Transform::from_scale(Vec3::splat(5.0));
-                spawn_transform.translation = transform.translation;
-                spawn_transform.rotation = Quat::from_axis_angle(Vec3::new(0., 0., 1.), angle);
-                gun_controller.shoot_timer = gun_controller.shoot_cooldown;
-                commands
-                    .spawn(SpriteBundle {
-                        transform: spawn_transform,
-                        texture: asset_server.load("bullet.png"),
-                        ..default()
-                    })
-                    .insert(Bullet {
-                        lifetime: BULLET_LIFETIME,
-                        speed: BULLET_SPEED,
-                        direction: diff.normalize(),
-                    });
-            }
+        if gun_controller.shoot_timer <= 0. && buttons.pressed(MouseButton::Left) {
+            let mut spawn_transform = Transform::from_scale(Vec3::splat(5.0));
+            spawn_transform.translation = transform.translation;
+            spawn_transform.rotation = Quat::from_axis_angle(Vec3::new(0., 0., 1.), angle);
+            gun_controller.shoot_timer = gun_controller.shoot_cooldown;
+            commands
+                .spawn(SpriteBundle {
+                    transform: spawn_transform,
+                    texture: asset_server.load("bullet.png"),
+                    ..default()
+                })
+                .insert(Bullet {
+                    lifetime: BULLET_LIFETIME,
+                    speed: BULLET_SPEED,
+                    direction: diff.normalize(),
+                });
         }
     }
 }

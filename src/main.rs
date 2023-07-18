@@ -47,7 +47,7 @@ pub fn create_player_anim_hashmap() -> HashMap<String, animation::Animation> {
         },
     );
 
-    return hash_map;
+    hash_map
 }
 pub fn create_gun_anim_hashmap() -> HashMap<String, animation::Animation> {
     let mut hash_map = HashMap::new();
@@ -72,7 +72,7 @@ pub fn create_gun_anim_hashmap() -> HashMap<String, animation::Animation> {
         },
     );
 
-    return hash_map;
+    hash_map
 }
 
 pub fn setup(
